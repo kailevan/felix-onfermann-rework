@@ -37,3 +37,11 @@ Motion: one fractional position drives everything. Drag maps pixels to works by 
   the same strips stood up in an 80px right column, thumbs 64px wide (lens 40 → 80), plus **fixed**: all 43 share the column's height,
   hover or drag picks what's under the pointer. The page mirrors that column on the left so the picture stays on the page's centre.
   Wheel / trackpad anywhere scrolls through the works and settles after 140ms; fixed steps one work per 60px of wheel.
+
+## Round 5 (Kai): desktop index, smaller
+- `works/`: his desktop index (chunk 1yt3xaqnta39o.js) rebuilt 1:1. Ragged rows: 56px thumbs, 10px gaps, rows 82px apart, each row breaking at a seeded random 0.35–1.0 of his column (mulberry32, seed 24 from his payload); hover dims the rest to 0.35; sticky preview with the series flip every 2.2s and the caption.
+- Reworked: Tune → Scale (50% default / 65% / His). The rows shrink and break at the same fractions of a column scaled the same way, so it's his exact index, smaller, flush left in 1 / span 6. The preview gets the right half (7 / span 6). "His" = his live layout; it matches his left/top values to the pixel.
+- Number labels stay at his 9px. At 50% the narrowest portrait thumbs are about 19px wide, so neighbouring labels sit close.
+- Clicking a work opens the viewer on it (`../?w=<slug>`); "other works" open on his live site.
+- Tune moved to shared `tune.js` / `tune.css` (both pages).
+- Git: local repo in felix/ (commit 7722c87). Creating a PUBLIC GitHub repo was blocked by the permission check; waiting for Kai: public + Pages, or private + invite Felix.
