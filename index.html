@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover">
+  <title>Felix Onfermann — Work</title>
+  <link rel="icon" href="assets/cat.png">
+  <link rel="preload" href="assets/GeistMono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdn.sanity.io">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="tune.css">
+</head>
+<body data-strip="pill">
+  <!-- his header, 1:1 (.header in his CSS) -->
+  <header class="header">
+    <a class="name title" href="works/"><img class="cat" src="assets/cat.png" alt=""><span>Felix Onfermann</span></a>
+    <nav class="title">
+      <a href="works/" aria-current="page">Work</a>
+      <a href="https://felixonfermann.com/archive">Archive</a>
+      <a href="https://felixonfermann.com/info">Info</a>
+    </nav>
+  </header>
+
+  <main class="viewer" id="viewer" aria-label="Work">
+    <div class="stage" id="stage"></div>
+    <button class="zone prev" type="button" aria-label="previous"></button>
+    <button class="zone next" type="button" aria-label="next"></button>
+
+    <div class="foot">
+      <div class="meta" id="meta"></div>
+      <div class="count">
+        <button type="button" data-step="-1" aria-label="previous">←</button>
+        <span id="count"></span>
+        <button type="button" data-step="1" aria-label="next">→</button>
+      </div>
+    </div>
+
+    <!-- every work, one endless strip (bottom on the phone, right column on desktop). The one in the middle is the one on the stage -->
+    <div class="strip" id="strip" aria-label="All works">
+      <div class="pill" id="pill"></div>
+      <div class="track" id="track"></div>
+      <!-- strip "fixed" (desktop): every work in the column's height; the pill travels along it -->
+      <div class="row" id="row"><div class="row-in" id="row-in"><div class="row-pill" id="row-pill"></div></div></div>
+    </div>
+  </main>
+
+  <!-- prototype controls, like the portfolio's. Hidden with ?ui=0 -->
+  <button id="tune-toggle" class="tune-toggle" type="button" aria-expanded="false" aria-controls="tune">Tune</button>
+  <aside id="tune" class="tune" hidden></aside>
+
+  <script src="data.js"></script>
+  <script src="tune.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

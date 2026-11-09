@@ -1,0 +1,33 @@
+/* ---------- Tune (prototype only): your portfolio's panel, 1:1. Hidden with ?ui=0 ---------- */
+.tune-toggle {
+  position: fixed; z-index: 40; right: 10px; top: 50%; transform: translateY(-50%);
+  writing-mode: vertical-rl; padding: 10px 6px; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #fff; background: rgba(10, 10, 10, 0.88); border-radius: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+.tune {
+  position: fixed; z-index: 41; right: 44px; top: 50%; transform: translateY(-50%);
+  width: 236px; max-width: calc(100vw - 60px); padding: 10px 12px 12px;
+  color: #fff; background: rgba(10, 10, 10, 0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-radius: 8px; font-size: 10px; letter-spacing: 0.02em; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  line-height: normal;
+}
+/* the viewer on desktop: the strip owns the right edge, so Tune sits on the left one */
+@media (min-width: 900px) {
+  body.tune-left .tune-toggle { right: auto; left: 10px; }
+  body.tune-left .tune { right: auto; left: 44px; }
+}
+.tune[hidden] { display: none; }
+.tune-title { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; margin-bottom: 8px; display: flex; justify-content: space-between; }
+.tune-title button { text-transform: uppercase; letter-spacing: 0.08em; font-size: 9px; }
+.tune-row { display: grid; grid-template-columns: 50px 1fr; align-items: center; gap: 6px; margin-top: 6px; }
+.tune-row > span { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.6; }
+.seg { display: flex; gap: 2px; background: rgba(255, 255, 255, 0.08); border-radius: 5px; padding: 2px; }
+.seg button { flex: 1; padding: 5px 0; border-radius: 4px; font-size: 10px; color: rgba(255, 255, 255, 0.6); }
+.seg button[aria-pressed="true"] { background: rgba(255, 255, 255, 0.9); color: #000; }
+.seg button.desk-only { display: none; }
+@media (min-width: 900px) { .seg button.desk-only { display: block; } }
+.tune-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.15); display: flex; gap: 6px; }
+.tune-foot button { flex: 1; padding: 6px 0; border-radius: 4px; background: rgba(255, 255, 255, 0.16); font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; }
+body.no-ui .tune, body.no-ui .tune-toggle { display: none !important; }

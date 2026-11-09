@@ -1,0 +1,164 @@
+/* Felix Onfermann, Work page, reworked (mobile + desktop).
+   Every token below is copied from his live CSS (felixonfermann.com, chunk 2l0wwpef4_3n1.css):
+   mobile values under 900px, desktop values above, same breakpoint as his. Only the strip is new. */
+
+@font-face {
+  font-family: GeistMono;
+  src: url(assets/GeistMono.woff2) format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --bg: #fff;
+  --fg: #000;
+  --fg-mute: #0006;
+  --placeholder: #f0f0f0;
+  --margin: 24px;          /* his desktop --margin */
+  --gutter: 16px;          /* his desktop --gutter */
+  --size: 11px;
+  --leading: 14px;
+  --micro: 9px;
+  --micro-leading: 12px;
+  --dim: 0.35;             /* his .table.has-hover .th */
+  --fade: 0.3s;            /* his .fade */
+  --morph: cubic-bezier(.215, .61, .355, 1);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --col: 80px;             /* desktop: the strip's column */
+}
+@media (max-width: 899px) {
+  :root { --margin: 16px; --gutter: 12px; }   /* his mobile values */
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; background: var(--bg); }
+body {
+  color: var(--fg);
+  font-family: GeistMono, ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--size);
+  line-height: var(--leading);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-user-select: none; user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; background: 0 0; border: 0; }
+img, video { display: block; max-width: none; }
+
+.title { text-transform: uppercase; letter-spacing: .02em; }
+.micro { font-size: var(--micro); line-height: var(--micro-leading); color: var(--fg-mute); }
+
+/* ---------- header (his) ---------- */
+.header {
+  position: fixed; inset: 0 0 auto; z-index: 20;
+  display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter);
+  align-items: end;        /* Kai: the nav sits on the name's baseline (his live site centres it, 4px higher) */
+  padding: var(--margin) var(--margin) 12px;
+  background: var(--bg);
+}
+.header .name { grid-column: 1 / span 3; display: flex; align-items: flex-end; gap: 8px; }
+.header .name img { width: 16px; height: 16px; }
+.header .name span { display: block; line-height: 8px; }
+.header nav { grid-column: 9 / span 4; justify-self: end; display: flex; gap: 24px; }
+.header nav a { display: block; line-height: 8px; }   /* same 8px line box as his name span → same baseline */
+.header nav a[aria-current=page] { text-decoration: underline; text-underline-offset: 2px; }
+body[data-nav="lower"] .header nav { text-transform: lowercase; }   /* Tune → Nav */
+@media (max-width: 899px) {
+  .header { display: flex; justify-content: space-between; align-items: flex-end; }
+  .header nav { gap: 16px; }
+}
+
+/* ---------- viewer ---------- */
+.viewer { position: fixed; inset: 0; z-index: 15; }
+.stage { position: relative; min-height: 0; }
+.layer {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity var(--fade);
+  pointer-events: none;
+}
+.layer.in { opacity: 1; }
+.layer img, .layer video { object-fit: contain; background-color: var(--placeholder); background-size: 100% 100%; }
+
+/* his .prev/.next: 30% of the width each */
+.zone { position: absolute; width: 30%; z-index: 2; }
+.zone.prev { left: 0; cursor: w-resize; }
+.zone.next { right: 0; cursor: e-resize; }
+
+.meta { min-width: 0; }
+.meta .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.count { display: flex; gap: 20px; flex: none; }
+.count span { font-variant-numeric: tabular-nums; }
+
+/* desktop: his .viewer (padding 56 / margin), his .stage (padding 32 0 40), his .meta and .count at the bottom corners.
+   New: the stage gives up one column on the right to the strip */
+.viewer {
+  display: grid;
+  grid-template-columns: var(--col) minmax(0, 1fr) var(--col);   /* an empty column on the left too: the picture stays on the page's centre, like his */
+  column-gap: var(--gutter);
+  padding: 56px var(--margin) var(--margin);
+}
+.stage { grid-area: 1 / 2; margin: 32px 0 40px; }
+.viewer { grid-template-rows: minmax(0, 1fr); }
+.foot { position: absolute; left: var(--margin); right: var(--margin); bottom: var(--margin); display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; z-index: 3; pointer-events: none; }
+.foot > * { pointer-events: auto; }
+.zone { top: 80px; bottom: 48px; }
+.zone.next { right: calc(var(--margin) + var(--col) + var(--gutter)); }
+
+/* mobile: his mobile viewer (flex column, padding 56 / 16), the strip along the bottom */
+@media (max-width: 899px) {
+  .viewer { display: flex; flex-direction: column; padding: 56px var(--margin) calc(var(--margin) + var(--sab)); }
+  .stage { flex: 1 1 0; margin: 16px 0; }
+  .foot { position: relative; left: auto; right: auto; bottom: auto; gap: 24px; min-height: 28px; }
+  .zone { bottom: calc(160px + var(--sab)); }
+  .zone.next { right: 0; }
+}
+
+/* ---------- the strip ---------- */
+.strip {
+  position: relative; z-index: 3;
+  grid-area: 1 / 3;
+  margin: 32px 0 40px;     /* the stage's own padding, so the strip's middle is the stage's middle */
+  touch-action: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%);
+  cursor: grab;
+}
+@media (max-width: 899px) {
+  .strip {
+    flex: none; height: 84px;
+    margin: 16px calc(-1 * var(--margin)) 0;   /* full bleed: the strip runs off both edges */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+  }
+}
+.strip.is-drag { cursor: grabbing; }
+.track { position: absolute; inset: 0; }
+.th { position: absolute; left: 50%; top: 50%; will-change: transform, width, height, opacity; }
+.th .im { position: absolute; inset: 0; overflow: hidden; background: var(--placeholder); }
+.th img { width: 100%; height: 100%; object-fit: cover; }
+
+.pill { position: absolute; left: 50%; top: 50%; pointer-events: none; display: none; background: var(--placeholder); border-radius: 8px; }
+body[data-strip="pill"] .pill { display: block; }
+/* plain: no pill, opacity alone. lens: no marker either, the swell is the marker */
+
+/* fixed (desktop): the strip doesn't move. Every work gets the same slice of the column's height,
+   cropped into it; hovering or dragging over it picks what's under the pointer, and the pill + opacity travel there */
+.row { position: absolute; inset: 0; display: none; }
+.row-in { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; height: 100%; }
+.row .th { position: relative; left: auto; top: auto; flex: 1 1 0; min-height: 0; width: 64px; opacity: var(--dim); transition: opacity var(--fade); will-change: auto; }
+.row .th.on { opacity: 1; }
+.row-pill {
+  position: absolute; top: 0; left: calc(50% - 36px); width: 72px;
+  background: var(--placeholder); border-radius: 6px;
+  transition: transform 420ms var(--morph), height 420ms var(--morph);
+}
+.strip.is-scrub .row-pill { transition-duration: 120ms; }
+.row-pill.no-anim { transition: none; }
+body[data-strip="fixed"] .row { display: block; }
+body[data-strip="fixed"] .track { display: none; }
+body[data-strip="fixed"] .strip { cursor: ns-resize; -webkit-mask-image: none; mask-image: none; }
+

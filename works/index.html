@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Felix Onfermann</title>
+  <link rel="icon" href="../assets/cat.png">
+  <link rel="preload" href="../assets/GeistMono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdn.sanity.io">
+  <link rel="stylesheet" href="works.css">
+  <link rel="stylesheet" href="../tune.css">
+</head>
+<body data-scale="50" data-nav="caps">
+  <!-- his header, 1:1 -->
+  <header class="header">
+    <a class="name title" href="./"><img class="cat" src="../assets/cat.png" alt=""><span>Felix Onfermann</span></a>
+    <nav class="title">
+      <a href="./" aria-current="page">Work</a>
+      <a href="https://felixonfermann.com/archive">Archive</a>
+      <a href="https://felixonfermann.com/info">Info</a>
+    </nav>
+  </header>
+
+  <!-- his index (.table): the ragged rows on the left, the hover preview on the right.
+       Reworked: the rows at a smaller scale, still flush left; the preview gets the right half of the screen -->
+  <section class="table" id="table">
+    <div class="groups" id="groups"></div>
+    <div class="preview" id="preview" aria-hidden="true"></div>
+  </section>
+
+  <!-- prototype controls, like the portfolio's. Hidden with ?ui=0 -->
+  <button id="tune-toggle" class="tune-toggle" type="button" aria-expanded="false" aria-controls="tune">Tune</button>
+  <aside id="tune" class="tune" hidden></aside>
+
+  <script src="../data.js"></script>
+  <script src="../tune.js"></script>
+  <script src="works.js"></script>
+</body>
+</html>

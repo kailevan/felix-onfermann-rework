@@ -1,0 +1,103 @@
+/* Felix Onfermann, desktop Work index, reworked.
+   His live CSS (chunk 2l0wwpef4_3n1.css) 1:1; only three things change, all marked "reworked":
+   the rows' scale (Tune → Scale), the rows' column (left half) and the preview's column (right half). */
+
+@font-face {
+  font-family: GeistMono;
+  src: url(../assets/GeistMono.woff2) format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root {
+  --bg: #fff; --fg: #000; --fg-mute: #0006; --placeholder: #f0f0f0;
+  --margin: 24px; --gutter: 16px;
+  --size: 11px; --leading: 14px; --micro: 9px; --micro-leading: 12px;
+}
+@media (max-width: 899px) { :root { --margin: 16px; --gutter: 12px; } }
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+html { background: var(--bg); }
+html, body { overflow-x: clip; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: GeistMono, ui-monospace, monospace;
+  font-size: var(--size); line-height: var(--leading);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; background: 0 0; border: 0; }
+img, video { max-width: 100%; display: block; }
+.title { text-transform: uppercase; letter-spacing: .02em; }
+.micro { font-size: var(--micro); line-height: var(--micro-leading); color: var(--fg-mute); }
+.fade { opacity: 0; transition: opacity .3s; }
+.fade.in { opacity: 1; }
+
+/* ---------- header (his; the nav sits on the name's baseline, Kai's fix) ---------- */
+.header {
+  z-index: 20; position: fixed; inset: 0 0 auto;
+  display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter);
+  align-items: end;
+  padding: var(--margin) var(--margin) 12px;
+  background: var(--bg);
+}
+.header .name { grid-column: 1 / span 3; display: flex; align-items: flex-end; gap: 8px; }
+.header .name img { width: 16px; height: 16px; }
+.header .name span { display: block; line-height: 8px; }
+.header nav { grid-column: 9 / span 4; justify-self: end; display: flex; gap: 24px; }
+.header nav a { display: block; line-height: 8px; }
+.header nav a[aria-current=page] { text-decoration: underline; text-underline-offset: 2px; }
+body[data-nav="lower"] .header nav { text-transform: lowercase; }
+@media (max-width: 899px) {
+  .header { display: flex; justify-content: space-between; align-items: flex-end; }
+  .header nav { gap: 16px; }
+}
+
+/* ---------- the index (his .table) ---------- */
+.table {
+  display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter);
+  padding: 96px var(--margin) 64px;
+}
+.table .groups { grid-column: 1 / span 6; }               /* reworked: the left half (his: 1 / span 7) */
+.table .thumbs { display: flex; flex-wrap: wrap; align-content: start; gap: 22px 10px; }
+.table .thumbs.ragged { display: block; position: relative; }
+.table .thumbs.ragged .th { position: absolute; }
+.table .th { display: block; text-align: left; transition: opacity .15s; }
+.table .th img { background: var(--placeholder); width: auto; height: var(--th, 56px); }   /* reworked: height from Tune → Scale */
+.table .th .n { display: block; margin-top: 3px; }
+.table .others { font: inherit; color: var(--fg-mute); margin: var(--others-top, 56px) 0 var(--others-bottom, 14px); }
+.table.has-hover .th { opacity: .35; }
+.table.has-hover .th.lit { opacity: 1; }
+.table .th.lit .n { color: var(--fg); }
+
+/* the preview: his sticky column, top 96, right-aligned. Reworked: the right half of the screen (his: 9 / span 4) */
+.table .preview {
+  grid-column: 7 / span 6;
+  position: sticky; top: 96px; align-self: start;
+  height: calc(100vh - 160px);
+  display: flex; flex-direction: column; align-items: flex-end;
+}
+.table .preview .big { flex: 0 auto; min-height: 0; display: flex; justify-content: flex-end; }
+.table .preview .big img, .table .preview .big video {
+  object-fit: contain; width: auto; max-width: 100%; height: auto; max-height: calc(100vh - 200px);
+}
+.table .preview .flipper { display: grid; place-items: start end; }
+.table .preview .flipper img { grid-area: 1 / 1; }
+.flip-fade .top { animation: .45s both flip-fade; }
+@keyframes flip-fade { 0% { opacity: 0; } }
+.table .preview .cap { display: flex; justify-content: space-between; gap: 24px; width: 100%; margin-top: 10px; }
+
+/* Tune → Scale 100 = his live page exactly: rows in 1 / span 7, preview in 9 / span 4 */
+body[data-scale="100"] .table .groups { grid-column: 1 / span 7; }
+body[data-scale="100"] .table .preview { grid-column: 9 / span 4; }
+
+/* his mobile (unchanged) */
+@media (max-width: 899px) {
+  .table { display: block; padding-top: 72px; }
+  .table .preview { display: none; }
+  .table .thumbs { justify-content: flex-start; gap: 16px 8px; }
+  .table .th img { height: 60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flipper img { animation: none !important; }
+  .fade { transition: none; opacity: 1; }
+}
