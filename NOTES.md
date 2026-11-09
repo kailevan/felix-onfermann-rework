@@ -44,4 +44,9 @@ Motion: one fractional position drives everything. Drag maps pixels to works by 
 - Number labels stay at his 9px. At 50% the narrowest portrait thumbs are about 19px wide, so neighbouring labels sit close.
 - Clicking a work opens the viewer on it (`../?w=<slug>`); "other works" open on his live site.
 - Tune moved to shared `tune.js` / `tune.css` (both pages).
-- Git: local repo in felix/ (commit 7722c87). Creating a PUBLIC GitHub repo was blocked by the permission check; waiting for Kai: public + Pages, or private + invite Felix.
+- Git: PUBLIC repo https://github.com/kailevan/felix-onfermann-rework (Felix can Code → Download ZIP). GitHub Pages live: https://kailevan.github.io/felix-onfermann-rework/ (viewer) and …/works/ (index). Link sent to Kai 2026-11-09 to share with Felix.
+
+## Resume here (2026-11-09)
+- Done and pushed; nothing open. Next = whatever Felix / Kai say after seeing it.
+- Local: `python3 _serve.py` → :8030 (phone: http://<Mac LAN IP>:8030/, `ipconfig getifaddr en0`).
+- Any change: commit with Kai's identity, push with `-c http.version=HTTP/1.1`; Pages rebuilds itself (~1 min).
